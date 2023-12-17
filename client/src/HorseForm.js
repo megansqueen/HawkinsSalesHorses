@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-function GridComplexExample({
+function HorseForm({
   handleNewHorse
 }) {
   const[image, setImage] = useState("")
@@ -60,4 +60,4 @@ function GridComplexExample({
   );
 }
 
-export default GridComplexExample;
+export default HorseForm;

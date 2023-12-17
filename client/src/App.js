@@ -5,6 +5,7 @@ import HorseNav from './HorseNav';
 import Login from './Login';
 import {Route, Routes} from "react-router-dom";
 import './App.css';
+import HorsePage from './HorsePage';
 
 function App() {
   const[currentUser, setCurrentUser] = useState(null)
@@ -32,6 +33,7 @@ function App() {
       <HorseNav currentUser={currentUser} setCurrentUser={setCurrentUser}/>
         <main>
           <Routes>
+            <Route exact path="/*" element={<HorsePage horses={horses} setHorses={setHorses} />}/>
             <Route path="/login" element={<Login setCurrentUser={setCurrentUser} />}/>
             <Route path="/createprofile" element={<CreateUser setCurrentUser={setCurrentUser}/>}/>
           </Routes>
@@ -43,9 +45,10 @@ function App() {
       <HorseNav currentUser={currentUser} setCurrentUser={setCurrentUser}/>
       <main>
         <Routes>
+        <Route exact path="/*" element={<HorsePage horses={horses} setHorses={setHorses} />}/>
           <Route exact path="/addhorse" element={<HorseForm />}/>
         </Routes>
-        </main>
+      </main>
       </>  
     );
 }  

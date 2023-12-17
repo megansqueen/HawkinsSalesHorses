@@ -7,5 +7,6 @@ Rails.application.routes.draw do
   post "/login", to: "session#create"
   delete "/logout", to: "session#destroy"
   delete "/delete", to: "horse#destroy"
+  post "/addHorse", to: "horse#create"
   
 end
