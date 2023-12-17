@@ -8,34 +8,26 @@ function Login({ setCurrentUser }) {
     const[username, setUsername] = useState("")
     const[password, setPassword] = useState("")
     const[errors, setErrors] = useState([])
-
-    function clearOut(){
-        setPassword("")
-        setUsername("")
-    }
+    const [isLoading, setIsLoading] = useState(false)
 
     function handleSubmit(e) {
-        e.preventDefault()
-        const user = {
-            username,
-            password
-        }
-        fetch("/createprofile", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({user: user}),
-        })
-        .then(res => {
-            if(res.ok) {
-                res.json().then(setCurrentUser)
-            } else {
-                res.json().then( e => setErrors(Object.entries(e.error).flat()))
-            }
-        })
-        clearOut()
-    }
+        e.preventDefault();
+        setIsLoading(true);
+        fetch("/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        }).then((r) => {
+          setIsLoading(false);
+          if (r.ok) {
+            r.json().then((user) => setCurrentUser(user));
+          } else {
+            r.json().then((err) => setErrors(err.errors));
+          }
+        });
+      }
 
   return (
     <Container fluid>
@@ -54,9 +46,16 @@ function Login({ setCurrentUser }) {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
                 </Form.Group>
-                <Button variant="primary" type="Login" value="Create Profile">
-                    Login
-                </Button>
+                <Form.Group>
+                    <Button variant="primary" type="Login" value="Create Profile">
+                        {isLoading ? "Loading..." : "Login"}
+                    </Button>
+                </Form.Group>
+                <Form.Group>
+                    {errors.map((err) => (
+                        <Form.Error key={err}>{err}</Form.Error>
+                    ))}
+                </Form.Group>
                 </Form>
             </Card.Body>
         </Card>

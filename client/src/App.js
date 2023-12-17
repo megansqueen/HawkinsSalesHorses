@@ -8,38 +8,45 @@ import './App.css';
 
 function App() {
   const[currentUser, setCurrentUser] = useState(null)
+  const[horses, setHorses] = useState([])
 
   useEffect(() => {
-    fetch('/auth')
-    .then(res => {
-      if(res.ok){
-        res.json().then(user => setCurrentUser(user))
-      } 
-    })
-  }, [])
+    // auto-login
+    fetch("/me").then((r) => {
+      if (r.ok) {
+        r.json().then((loggedInUser) => setCurrentUser(loggedInUser));
+      }
+    });
+  }, []);
 
-  // useEffect(() => {
-  //   fetch("/me").then((response) => {
-  //     if (response.ok) {
-  //       response.json().then((user) => setUser(user))
-  //     }
-  //   });
-  // }, []);
+  function updateHorseInfo(data) {
+    setHorses(data)
+  }
 
-  // if (user) {
-    if(!currentUser) return <Login setCurrentUser={setCurrentUser} />
+  const handleNewHorse = (newItem) => {
+    setHorses([...horses, newItem])
+  }
+
+    if(!currentUser) return (
+      <>
+      <HorseNav currentUser={currentUser} setCurrentUser={setCurrentUser}/>
+        <main>
+          <Routes>
+            <Route path="/login" element={<Login setCurrentUser={setCurrentUser} />}/>
+            <Route path="/createprofile" element={<CreateUser setCurrentUser={setCurrentUser}/>}/>
+          </Routes>
+        </main>
+      </>
+    )
     return ( 
-    <div> 
-      <HorseNav />
+    <> 
+      <HorseNav currentUser={currentUser} setCurrentUser={setCurrentUser}/>
+      <main>
         <Routes>
           <Route exact path="/addhorse" element={<HorseForm />}/>
-          <Route path="/createprofile" element={<CreateUser setCurrentUser={setCurrentUser}/>}/>
         </Routes>
-      </div>  
-    )
-  // } else {
-  //   return <Login onLogin={setUser}/>
-  // }
-
+        </main>
+      </>  
+    );
 }  
 export default App;

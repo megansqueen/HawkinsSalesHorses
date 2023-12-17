@@ -8,9 +8,9 @@ import Col from 'react-bootstrap/Col';
 
 function CreateUser({ setCurrentUser }) {
     const[username, setUsername] = useState("")
-    const[name, setName] = useState("")
     const[password, setPassword] = useState("")
     const[errors, setErrors] = useState([])
+
 
     function clearOut(){
         setPassword("")
@@ -18,27 +18,27 @@ function CreateUser({ setCurrentUser }) {
     }
 
     function handleSubmit(e) {
-        e.preventDefault()
+        e.preventDefault();
+        setErrors([]);
         const user = {
-            username,
-            password
-        }
-        fetch("/createprofile", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({user: user}),
-        })
-        .then(res => {
-            if(res.ok) {
-                res.json().then(setCurrentUser)
-            } else {
-                res.json().then( e => setErrors(Object.entries(e.error).flat()))
-            }
-        })
-        clearOut()
-    }
+          user: {
+          username,
+          password
+        }}
+        fetch("/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        }).then((r) => {
+          if (r.ok) {
+            r.json().then(setCurrentUser);
+          } else {
+            r.json().then((err) => setErrors(err.errors));
+          }
+        });
+      }
 
   return (
     <Container fluid>

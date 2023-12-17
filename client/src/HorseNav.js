@@ -4,14 +4,17 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import Link from 'react';
 
-function HorseNav({ onLogout }) {
+function HorseNav({ setCurrentUser }) {
 
-  function handleLogout() {
-    fetch("/logout", {
-      method: "DELETE",
-    }).then(() => onLogout());
-  }
+    function handleLogoutClick() {
+      fetch("/logout", { method: "DELETE" }).then((r) => {
+        if (r.ok) {
+          setCurrentUser(null);
+        }
+      });
+    }
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
@@ -48,7 +51,7 @@ function HorseNav({ onLogout }) {
               aria-label="Search"
             />
             <Button variant="outline-success">Search</Button>
-            <Button onClick={handleLogout}>Logout</Button>
+            <Button onClick={handleLogoutClick}>Logout</Button>
           </Form>
         </Navbar.Collapse>
       </Container>

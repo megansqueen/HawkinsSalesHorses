@@ -13,10 +13,12 @@
 ActiveRecord::Schema[7.1].define(version: 2023_11_22_061351) do
   create_table "horses", force: :cascade do |t|
     t.string "name"
+    t.string "image"
     t.string "breed"
     t.string "color"
     t.string "skill"
     t.integer "price"
+    t.string "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
