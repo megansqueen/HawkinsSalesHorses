@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import CreateUser from './CreateUser';
 import HorseForm from './HorseForm';
 import HorseNav from './HorseNav';
@@ -11,6 +12,7 @@ function App() {
   const[currentUser, setCurrentUser] = useState(null)
   const[horses, setHorses] = useState([])
   const [searchTerm, setSearchTerm] = useState("")
+  const navigate = useNavigate();
 
   useEffect(() => {
     // auto-login
@@ -50,7 +52,7 @@ function App() {
     )
     return ( 
     <> 
-      <HorseNav setSearchTerm={setSearchTerm}searchTerm={searchTerm}currentUser={currentUser} setCurrentUser={setCurrentUser}/>
+      <HorseNav navigate={navigate}setSearchTerm={setSearchTerm}searchTerm={searchTerm}currentUser={currentUser} setCurrentUser={setCurrentUser}/>
       <main>
         <Routes>
         <Route exact path="/*" element={<HorsePage currentUser={currentUser}searchTerm={searchTerm}horses={horses} setHorses={setHorses} />}/>

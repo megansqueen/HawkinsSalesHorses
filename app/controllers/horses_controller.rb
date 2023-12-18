@@ -1,5 +1,5 @@
 class HorsesController < ApplicationController
-    before_action :require_login, only: :index
+    # before_action :require_login, only: :index
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
 
     def create
@@ -15,6 +15,7 @@ class HorsesController < ApplicationController
     def destroy
         horse = Horse.find(params[:id])
         horse.delete
+        render json: horse
     end
 
     def update_image

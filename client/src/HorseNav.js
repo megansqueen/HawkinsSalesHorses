@@ -6,12 +6,13 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Search from "./Search";
 
-function HorseNav({ setCurrentUser, handleSearch, searchTerm, setSearchTerm }) {
+function HorseNav({ navigate, setCurrentUser, handleSearch, searchTerm, setSearchTerm }) {
 
     function handleLogoutClick() {
       fetch("/logout", { method: "DELETE" }).then((r) => {
         if (r.ok) {
           setCurrentUser(null);
+          navigate('/login')
         }
       });
     }

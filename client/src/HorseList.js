@@ -23,13 +23,7 @@ function HorseList({
 
 
     function handleDeleted(deletedHorse) {
-        const remainingHorses = filteredHorses.filter((horse) => {
-            if (horse.id !== deletedHorse) {
-                return horse
-            } else {
-                return null
-            }
-        })
+        const remainingHorses = horses.filter((horse) => horse.id !== deletedHorse.id)
         setHorses(remainingHorses)
     }
 

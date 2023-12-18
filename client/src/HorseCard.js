@@ -18,12 +18,15 @@ function HorseCard({
     const {id, name, image, breed, color, skill, price, offers} = horse
 
     function handleDeleteClick() {
-        console.log(id)
         const itemData = {
           id: id
         }
         fetch(`/delete`, {
           method: "DELETE",
+          headers: {
+            "Content-Type": "application/json"
+        },
+          body: JSON.stringify(itemData),
         })
           .then((r) => r.json())
           .then((data) => handleDeleted(data))
