@@ -51,11 +51,11 @@ function Login({ setCurrentUser }) {
                         {isLoading ? "Loading..." : "Login"}
                     </Button>
                 </Form.Group>
-                <Form.Group>
+                {/* <Form.Group>
                     {errors.map((err) => (
                         <Form.Error key={err}>{err}</Form.Error>
                     ))}
-                </Form.Group>
+                </Form.Group> */}
                 </Form>
             </Card.Body>
         </Card>

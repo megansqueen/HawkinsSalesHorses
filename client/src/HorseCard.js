@@ -11,17 +11,22 @@ function HorseCard({
     horse,  
     handleDeleted,
     horses,
-    setHorses
+    setHorses,
+    currentUser
 }) {
 
-    const {id, name, image, breed, color, skill, price} = horse
+    const {id, name, image, breed, color, skill, price, offers} = horse
 
     function handleDeleteClick() {
+        console.log(id)
+        const itemData = {
+          id: id
+        }
         fetch(`/delete`, {
           method: "DELETE",
         })
           .then((r) => r.json())
-          .then(() => handleDeleted(id))
+          .then((data) => handleDeleted(data))
     }
 
     function handleNewPicture(newItem) {
@@ -39,19 +44,7 @@ function HorseCard({
       setHorses(updatedHorses)
     }
 
-    const handleNewOffer = (newOffer) => {
-      const updatedHorses = horses.map((horse) => {
-        if(horse.id === newOffer.horse_id) {
-          return {
-            ...horse,
-            offers:
-            [...offers, newOffer]
-          }
-        }
-        return horse;
-      })
-      setHorses(updatedHorses)
-    }
+
 
     // function handleDeletedReview(deletedReview) {
     //   const remainingReviews = reviews.filter((review) => review.id !== deletedReview.id)
@@ -79,30 +72,32 @@ function HorseCard({
         <UpdatePic handleNewPicture={handleNewPicture}image={image}name={name}id={id}offers={offers}/>
         </CardBody>
       <ListGroup className="list-group-flush">
-        <ListGroup.Item>Park: {park}</ListGroup.Item>
-        <ListGroup.Item>Reviews:</ListGroup.Item>
+        <ListGroup.Item>Name: {name}</ListGroup.Item>
+        <ListGroup.Item>Breed: {breed}</ListGroup.Item>
+        <ListGroup.Item>Color: {color}</ListGroup.Item>
+        <ListGroup.Item>Skill: {skill}</ListGroup.Item>
+        <ListGroup.Item>Price: ${price}</ListGroup.Item>
+        <ListGroup.Item>Offers:</ListGroup.Item>
       </ListGroup>
         <ListGroup className="list-group-flush">
-            {reviews.map((review) =>
-                 <ListGroup.Item key={review.id}>
-                        <ReviewCard
-                            review={review}
-                            handleDeletedReview={handleDeletedReview}          
+            {offers.map((offer) =>
+                 <ListGroup.Item key={offer.id}>
+                        <OfferCard
+                            offer={offer}        
                             />
                         </ListGroup.Item>
                 )}
         </ListGroup>
         <Card.Body>
-            <CreateReview 
-                rides={rides}
-                setRides={setRides}
-                id={id}
-                reviews={reviews}
-                handleNewReview={handleNewReview}
+            <CreateOffer 
+                horse={horse}
+                horses={horses}
+                setHorses={setHorses}
+                offers={offers}
                 />
         </Card.Body>
       <Card.Body>
-        <Button onClick={handleDeleteClick}variant="dark">Delete Ride</Button>
+        <Button onClick={handleDeleteClick}variant="dark">Delete Horse</Button>
       </Card.Body>
     </Card>
   );

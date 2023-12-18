@@ -10,17 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_22_061351) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_18_185339) do
   create_table "horses", force: :cascade do |t|
     t.string "name"
     t.string "image"
     t.string "breed"
     t.string "color"
     t.string "skill"
-    t.integer "price"
     t.string "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "price", precision: 10, scale: 2, default: "0.0", null: false
+  end
+
+  create_table "offers", force: :cascade do |t|
+    t.string "buyer"
+    t.string "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "horse_id"
+    t.string "user_id"
   end
 
   create_table "sessions", force: :cascade do |t|

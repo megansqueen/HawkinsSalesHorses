@@ -7,12 +7,20 @@ import Col from 'react-bootstrap/Col';
 function HorseList({
     horses,
     setHorses,
-    searchTerm
+    searchTerm,
+    currentUser
 }) {
 
     const filteredHorses = horses.filter ((horse) => {
-        return horse.breed.toLowerCase().includes(searchTerm.toLowerCase()) 
+        console.log(horse.breed.toLowerCase())
+        if (searchTerm) {
+            return horse.breed.toLowerCase().includes(searchTerm.toLowerCase()) 
+        }
+        else {
+            return horses
+        }
     })
+
 
     function handleDeleted(deletedHorse) {
         const remainingHorses = filteredHorses.filter((horse) => {
@@ -54,6 +62,7 @@ function HorseList({
                             horses={horses}
                             offers={horse.offers}
                             handleNewOffer={handleNewOffer}
+                            currentUser={currentUser}
                         />
             </Col>
             ))}

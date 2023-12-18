@@ -4,9 +4,9 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import Link from 'react';
+import Search from "./Search";
 
-function HorseNav({ setCurrentUser }) {
+function HorseNav({ setCurrentUser, handleSearch, searchTerm, setSearchTerm }) {
 
     function handleLogoutClick() {
       fetch("/logout", { method: "DELETE" }).then((r) => {
@@ -44,13 +44,7 @@ function HorseNav({ setCurrentUser }) {
             </NavDropdown>
           </Nav>
           <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
-            <Button variant="outline-success">Search</Button>
+            <Search handleSearch={handleSearch}searchTerm={searchTerm}setSearchTerm={setSearchTerm}/>
             <Button onClick={handleLogoutClick}>Logout</Button>
           </Form>
         </Navbar.Collapse>

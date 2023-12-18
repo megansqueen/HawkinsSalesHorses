@@ -10,6 +10,7 @@ import HorsePage from './HorsePage';
 function App() {
   const[currentUser, setCurrentUser] = useState(null)
   const[horses, setHorses] = useState([])
+  const [searchTerm, setSearchTerm] = useState("")
 
   useEffect(() => {
     // auto-login
@@ -20,8 +21,15 @@ function App() {
     });
   }, []);
 
-  function updateHorseInfo(data) {
+  useEffect(() => {
+    fetch("/horses")
+    .then((r) => r.json())
+      .then((horseData) => updateHorseData(horseData))
+  }, [])
+
+  function updateHorseData(data) {
     setHorses(data)
+    console.log(data)
   }
 
   const handleNewHorse = (newItem) => {
@@ -30,7 +38,7 @@ function App() {
 
     if(!currentUser) return (
       <>
-      <HorseNav currentUser={currentUser} setCurrentUser={setCurrentUser}/>
+      <HorseNav setSearchTerm={setSearchTerm}searchTerm={searchTerm}currentUser={currentUser} setCurrentUser={setCurrentUser}/>
         <main>
           <Routes>
             <Route exact path="/*" element={<HorsePage horses={horses} setHorses={setHorses} />}/>
@@ -42,11 +50,11 @@ function App() {
     )
     return ( 
     <> 
-      <HorseNav currentUser={currentUser} setCurrentUser={setCurrentUser}/>
+      <HorseNav setSearchTerm={setSearchTerm}searchTerm={searchTerm}currentUser={currentUser} setCurrentUser={setCurrentUser}/>
       <main>
         <Routes>
-        <Route exact path="/*" element={<HorsePage horses={horses} setHorses={setHorses} />}/>
-          <Route exact path="/addhorse" element={<HorseForm />}/>
+        <Route exact path="/*" element={<HorsePage currentUser={currentUser}searchTerm={searchTerm}horses={horses} setHorses={setHorses} />}/>
+          <Route exact path="/addhorse" element={<HorseForm currentUser={currentUser}/>}/>
         </Routes>
       </main>
       </>  

@@ -1,4 +1,5 @@
 class HorsesController < ApplicationController
+    before_action :require_login, only: :index
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
 
     def create
@@ -6,9 +7,20 @@ class HorsesController < ApplicationController
             render json: horse, status: :created
     end
 
+    def index
+        horses = Horse.includes(:offers).all
+        render json: horses, each_serializer: HorseSerializer
+    end
+
     def destroy
-        horse = Horse.find_by(:user_id)
+        horse = Horse.find(params[:id])
         horse.delete
+    end
+
+    def update_image
+        horse = Horse.find(params[:id])
+        horse.update(horse_params)
+        render json: horse
     end
 
     private
@@ -18,7 +30,7 @@ class HorsesController < ApplicationController
     end
 
     def horse_params
-        params.permit(:name, :image, :breed, :color, :skill, :price)
+        params.require(:horse).permit(:id, :user_id, :name, :image, :breed, :color, :skill, :price, :offers)
     end
 
 end
