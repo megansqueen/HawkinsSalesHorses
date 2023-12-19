@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CreateOffer from './CreateOffer';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import OfferCard from './OfferCard';
 import UpdatePic from './UpdatePic';
 import { CardBody } from "react-bootstrap";
+import { useNavigate } from 'react-router-dom'
 
 function HorseCard({ 
     horse,  
@@ -14,10 +15,11 @@ function HorseCard({
     setHorses,
     currentUser
 }) {
-
     const {id, name, image, breed, color, skill, price, offers} = horse
+    const navigate = useNavigate()
 
     function handleDeleteClick() {
+      if(currentUser) {
         const itemData = {
           id: id
         }
@@ -30,22 +32,27 @@ function HorseCard({
         })
           .then((r) => r.json())
           .then((data) => handleDeleted(data))
+      }
+      else {
+        navigate('/login')
+      }
     }
 
-    function handleNewPicture(newItem) {
-      console.log(newItem)
+    
+    function handleNewOffer(newOffer) {
       const updatedHorses = horses.map((horse) => {
-        if(horse.id === newItem.id) {
+        if(horse.id === newOffer.horse_id) {
+          const updatedOffers = horse.offers.push(newOffer);
           return {
             ...horse,
-            image:
-            newItem.image
+            offers:
+            updatedOffers
           }
         }
         return horse;
       })
-      setHorses(updatedHorses)
-    }
+      setHorses(updatedHorses);
+  }
 
 
 
@@ -71,9 +78,6 @@ function HorseCard({
       <Card.Body>
         <Card.Title>{name}</Card.Title>
       </Card.Body>
-      <CardBody>
-        <UpdatePic handleNewPicture={handleNewPicture}image={image}name={name}id={id}offers={offers}/>
-        </CardBody>
       <ListGroup className="list-group-flush">
         <ListGroup.Item>Name: {name}</ListGroup.Item>
         <ListGroup.Item>Breed: {breed}</ListGroup.Item>
@@ -97,6 +101,8 @@ function HorseCard({
                 horses={horses}
                 setHorses={setHorses}
                 offers={offers}
+                currentUser={currentUser}
+                handleNewOffer={handleNewOffer}
                 />
         </Card.Body>
       <Card.Body>

@@ -34,13 +34,9 @@ function App() {
     console.log(data)
   }
 
-  const handleNewHorse = (newItem) => {
-    setHorses([...horses, newItem])
-  }
-
     if(!currentUser) return (
       <>
-      <HorseNav setSearchTerm={setSearchTerm}searchTerm={searchTerm}currentUser={currentUser} setCurrentUser={setCurrentUser}/>
+      <HorseNav currentUser={currentUser}navigate={navigate}setSearchTerm={setSearchTerm}searchTerm={searchTerm}setCurrentUser={setCurrentUser}/>
         <main>
           <Routes>
             <Route exact path="/*" element={<HorsePage horses={horses} setHorses={setHorses} />}/>
@@ -52,11 +48,11 @@ function App() {
     )
     return ( 
     <> 
-      <HorseNav navigate={navigate}setSearchTerm={setSearchTerm}searchTerm={searchTerm}currentUser={currentUser} setCurrentUser={setCurrentUser}/>
+      <HorseNav currentUser={currentUser}navigate={navigate}setSearchTerm={setSearchTerm}searchTerm={searchTerm}setCurrentUser={setCurrentUser}/>
       <main>
         <Routes>
-        <Route exact path="/*" element={<HorsePage currentUser={currentUser}searchTerm={searchTerm}horses={horses} setHorses={setHorses} />}/>
-          <Route exact path="/addhorse" element={<HorseForm currentUser={currentUser}/>}/>
+        <Route exact path="/*" element={<HorsePage updateHorseData={updateHorseData}useNavigate={useNavigate}navigate={navigate}currentUser={currentUser}searchTerm={searchTerm}horses={horses} setHorses={setHorses} />}/>
+          <Route exact path="/addhorse" element={<HorseForm navigate={navigate}currentUser={currentUser}/>}/>
         </Routes>
       </main>
       </>  

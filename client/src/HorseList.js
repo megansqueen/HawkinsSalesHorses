@@ -8,7 +8,8 @@ function HorseList({
     horses,
     setHorses,
     searchTerm,
-    currentUser
+    currentUser,
+    updateHorseData
 }) {
 
     const filteredHorses = horses.filter ((horse) => {
@@ -23,24 +24,9 @@ function HorseList({
 
 
     function handleDeleted(deletedHorse) {
-        const remainingHorses = horses.filter((horse) => horse.id !== deletedHorse.id)
-        setHorses(remainingHorses)
-    }
-
-    function handleNewOffer(newOffer) {
-        const updatedHorses = horses.map((horse) => {
-          if(horse.id === newOffer.horseId) {
-            const updatedOffers = horse.offers.push(newOffer);
-            return {
-              ...horse,
-              offers:
-              updatedOffers
-            }
-          }
-          return horse;
-        })
-        setHorses(updatedHorses);
-    }
+            const remainingHorses = horses.filter((horse) => horse.id !== deletedHorse.id)
+            setHorses(remainingHorses)
+        } 
 
     return (
         <Container>
@@ -55,7 +41,6 @@ function HorseList({
                             setHorses={setHorses}
                             horses={horses}
                             offers={horse.offers}
-                            handleNewOffer={handleNewOffer}
                             currentUser={currentUser}
                         />
             </Col>

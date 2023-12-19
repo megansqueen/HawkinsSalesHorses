@@ -13,7 +13,7 @@ function OfferCard({
                   <ListGroup.Item>Buyer: {buyer}</ListGroup.Item>
                   <ListGroup.Item>Price: {price}</ListGroup.Item>
             </ListGroup>
-
+          
       </Card>
   );
 }

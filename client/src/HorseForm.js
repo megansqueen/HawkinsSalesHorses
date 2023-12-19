@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useNavigate } from 'react-router-dom';
 
 function HorseForm({
   handleNewHorse,
@@ -12,6 +13,7 @@ function HorseForm({
   const[color, setColor] = useState("")
   const[skill, setSkill] = useState("")
   const[price, setPrice] = useState("")
+  const navigate = useNavigate()
   // :name, :image, :breed, :color, :skill, :price
 
   function handleReset() {
@@ -32,6 +34,7 @@ function HorseForm({
   function handleSubmit(e) {
     console.log(currentUser)
     // e.preventDefault();
+    if (currentUser){
     const horseData = {
       horse: {
         image: image,
@@ -52,6 +55,9 @@ function HorseForm({
     .then((r) => r.json())
     .then((newItem) => handleNewHorse(newItem))
     .then(handleReset)
+  } else {
+    navigate('/login')
+  }
 }
 
   return (

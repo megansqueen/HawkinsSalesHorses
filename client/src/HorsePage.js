@@ -4,12 +4,14 @@ function HorsePage({
     horses, 
     setHorses,
     searchTerm,
-    currentUser
+    currentUser,
+    updateHorseData
 }) {
 
   return (
     <main>
             <HorseList 
+                updateHorseData={updateHorseData}
                 horses={horses}
                 setHorses={setHorses}
                 searchTerm={searchTerm}

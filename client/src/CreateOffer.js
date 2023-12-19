@@ -4,9 +4,8 @@ import Form from 'react-bootstrap/Form';
 
 function CreateOffer({ 
     horse,
-    horses,
-    setHorses,
-    offers
+    handleNewOffer,
+    currentUser
 }) 
 
 {
@@ -18,13 +17,20 @@ function CreateOffer({
         setPrice("")
     }
 
+    const handlePriceInput = (e) => { 
+        const value = e.target.value;
+        const formattedValue = value.replace(/[^0-9]/g,'');
+      setPrice(formattedValue)
+      }
+
     function handleSubmit(e) {
+        console.log(currentUser.user_id)
         e.preventDefault();
         const offerData = {
             buyer: buyer,
             price: price,
-            user_id: horse.user_id,
-            horse_id: horse.id
+            horse_id: horse.id,
+            user: currentUser.user_id
         }
         fetch(`/offers`, {
             method: "POST",
@@ -38,25 +44,11 @@ function CreateOffer({
         .then(handleReset)
     }
 
-    const handleNewOffer = (newOffer) => {
-        const updatedHorses = horses.map((horse) => {
-          if(horse.id === newOffer.horse_id) {
-            return {
-              ...horse,
-              offers:
-              [...offers, newOffer]
-            }
-          }
-          return horse;
-        })
-        setHorses(updatedHorses)
-      }
-
     return (
         <div >
         <Form className="Card"onSubmit={handleSubmit}>Leave Offer
                     <Form.Control onChange={(e) => setBuyer(e.target.value)}type="text" name="buyer" placeholder="Your Name" value={buyer}/>
-                    <Form.Control onChange={(e) => setPrice(e.target.value)}type="text" name="price" placeholder="What is your offer?" value={price}/>
+                    <Form.Control onChange={handlePriceInput}type="text" name="price" placeholder="What is your offer?" value={price}/>
                 <Button type="submit">Add Offer</Button>
             </Form>
       </div>

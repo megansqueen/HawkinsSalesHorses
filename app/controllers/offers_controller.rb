@@ -1,5 +1,5 @@
 class OffersController < ApplicationController
-    # before_action :require_login, only: :create
+    before_action :require_login, only: :create
 
     def create
         offer = Offer.create!(offer_params)
