@@ -12,5 +12,6 @@ Rails.application.routes.draw do
   post "/offers", to: "offers#create"
   patch "/image", to: "horses#update_image"
   get "/horses", to: "horses#index"
+  patch "/offerUpdate", to: "offers#update"
   
 end

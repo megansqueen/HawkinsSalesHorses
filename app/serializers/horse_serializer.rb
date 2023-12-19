@@ -6,7 +6,9 @@ class HorseSerializer < ActiveModel::Serializer
             {
                 id: offer.id,
                 buyer: offer.buyer,
-                price: offer.price
+                price: offer.price,
+                user_id: offer.user_id,
+                horse_id: offer.horse_id
             }
         end
     end

@@ -10,7 +10,7 @@ function CreateOffer({
 
 {
     const [buyer, setBuyer] = useState([])
-    const [price, setPrice] = useState([])
+    const [price, setPrice] = useState("")
 
     function handleReset() {
         setBuyer("")
@@ -20,17 +20,16 @@ function CreateOffer({
     const handlePriceInput = (e) => { 
         const value = e.target.value;
         const formattedValue = value.replace(/[^0-9]/g,'');
-      setPrice(formattedValue)
+        setPrice(formattedValue)
       }
 
     function handleSubmit(e) {
-        console.log(currentUser.user_id)
         e.preventDefault();
         const offerData = {
             buyer: buyer,
             price: price,
             horse_id: horse.id,
-            user: currentUser.user_id
+            user_id: currentUser.user_id
         }
         fetch(`/offers`, {
             method: "POST",

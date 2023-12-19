@@ -8,12 +8,10 @@ function HorseList({
     horses,
     setHorses,
     searchTerm,
-    currentUser,
-    updateHorseData
+    currentUser
 }) {
 
     const filteredHorses = horses.filter ((horse) => {
-        console.log(horse.breed.toLowerCase())
         if (searchTerm) {
             return horse.breed.toLowerCase().includes(searchTerm.toLowerCase()) 
         }

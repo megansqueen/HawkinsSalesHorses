@@ -16,9 +16,10 @@ function App() {
 
   useEffect(() => {
     // auto-login
-    fetch("/me").then((r) => {
+    fetch("/me")
+      .then((r) => {
       if (r.ok) {
-        r.json().then((loggedInUser) => setCurrentUser(loggedInUser));
+        r.json().then((loggedInUser) => setCurrentUser(loggedInUser))
       }
     });
   }, []);
@@ -31,7 +32,6 @@ function App() {
 
   function updateHorseData(data) {
     setHorses(data)
-    console.log(data)
   }
 
     if(!currentUser) return (

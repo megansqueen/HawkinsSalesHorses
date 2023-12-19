@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CreateOffer from './CreateOffer';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
@@ -15,7 +15,7 @@ function HorseCard({
     setHorses,
     currentUser
 }) {
-    const {id, name, image, breed, color, skill, price, offers} = horse
+    const {id, name, image, breed, color, skill, price, offers, user_id} = horse
     const navigate = useNavigate()
 
     function handleDeleteClick() {
@@ -37,24 +37,16 @@ function HorseCard({
         navigate('/login')
       }
     }
-
     
     function handleNewOffer(newOffer) {
       const updatedHorses = horses.map((horse) => {
-        if(horse.id === newOffer.horse_id) {
-          const updatedOffers = horse.offers.push(newOffer);
-          return {
-            ...horse,
-            offers:
-            updatedOffers
-          }
+        if(horse.id == newOffer.horse_id) {
+          horse.offers.push(newOffer);
         }
         return horse;
       })
       setHorses(updatedHorses);
   }
-
-
 
     // function handleDeletedReview(deletedReview) {
     //   const remainingReviews = reviews.filter((review) => review.id !== deletedReview.id)
@@ -90,7 +82,9 @@ function HorseCard({
             {offers.map((offer) =>
                  <ListGroup.Item key={offer.id}>
                         <OfferCard
-                            offer={offer}        
+                            offer={offer}
+                            currentUser={currentUser} 
+                            handleNewOffer={handleNewOffer}
                             />
                         </ListGroup.Item>
                 )}

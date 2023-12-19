@@ -42,7 +42,8 @@ function HorseForm({
         breed: breed,
         color: color,
         skill: skill,
-        price: price
+        price: price, 
+        user_id: currentUser.user_id
       }
     }
     fetch("/addHorse", {
